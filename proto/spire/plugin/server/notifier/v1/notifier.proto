@@ -1,0 +1,52 @@
+// A Notifier plugin reacts to various server related events
+
+syntax = "proto3";
+package spire.plugin.server.notifier.v1;
+option go_package = "github.com/spiffe/spire-plugin-sdk/proto/spire/plugin/server/notifier/v1;notifierv1";
+
+import "spire/plugin/types/bundle.proto";
+
+service Notifier {
+    // Notify notifies the plugin that an event occurred. Errors returned by
+    // the plugin are logged but otherwise ignored.
+    rpc Notify(NotifyRequest) returns (NotifyResponse);
+
+    // NotifyAndAdvise notifies the plugin that an event occurred and waits
+    // for a response. Errors returned by the plugin control SPIRE Server
+    // behavior. See NotifyAndAdviseRequest for per-event details.
+    rpc NotifyAndAdvise(NotifyAndAdviseRequest) returns (NotifyAndAdviseResponse);
+}
+
+message NotifyRequest {
+    // Required. The event the plugin is being notified for.
+    oneof event {
+        // BundleUpdated is emitted whenever SPIRE Server changes the trust
+        // bundle.
+        BundleUpdated bundle_updated = 1;
+    }
+}
+
+message NotifyResponse {
+}
+
+message BundleLoaded {
+    // Required. The bundle that was loaded.
+    spire.plugin.types.Bundle bundle = 1;
+}
+
+message NotifyAndAdviseRequest {
+    // Required. The event the plugin is being notified for.
+    oneof event {
+        // BundleLoaded is emitted on startup after SPIRE Server creates/loads
+        // the trust bundle. If an error is returned SPIRE Server is shut down.
+        BundleLoaded bundle_loaded = 1;
+    }
+}
+
+message NotifyAndAdviseResponse {
+}
+
+message BundleUpdated {
+    // Required. The bundle that was updated.
+    spire.plugin.types.Bundle bundle = 1;
+}
