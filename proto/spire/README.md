@@ -1,0 +1,1 @@
+current dir contains proto files from [spiffe/spire-plugin-sdk](https://github.com/spiffe/spire-plugin-sdk) repo, following the [Apache 2.0 license](https://github.com/spiffe/spire-plugin-sdk/blob/main/LICENSE) of the original repo
