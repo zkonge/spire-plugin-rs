@@ -45,7 +45,7 @@ impl Config for DummyNodeAttestor {
         let id = hcl::from_str::<DummyNodeAttestorConfig>(&request.into_inner().hcl_configuration)
             .map(|x| x.id)
             .map_err(|e| {
-                Status::invalid_argument(format!("failed to parse HCL configuration: {}", e))
+                Status::invalid_argument(format!("failed to parse HCL configuration: {e}"))
             })?;
 
         *self.id.lock().unwrap() = id;

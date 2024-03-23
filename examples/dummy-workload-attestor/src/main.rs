@@ -72,7 +72,7 @@ async fn amain() {
     .await
     .unwrap();
 
-    let attestor = Arc::new(DummyAttestor::default());
+    let attestor = Arc::new(DummyAttestor);
 
     server
         .add_plugin(ConfigServer::from_arc(attestor.clone()))
