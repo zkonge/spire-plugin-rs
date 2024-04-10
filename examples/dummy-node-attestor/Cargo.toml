@@ -12,7 +12,9 @@ hcl-rs = "0.16.8"
 serde = { version = "1.0.197", features = ["derive"] }
 
 [[bin]]
-name = "server"
+name = "dummy-node-attestor-server"
+path = "src/bin/server.rs"
 
 [[bin]]
-name = "client"
+name = "dummy-node-attestor-client"
+path = "src/bin/client.rs"
