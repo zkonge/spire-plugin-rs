@@ -5,8 +5,8 @@ use std::{
 
 use futures::stream;
 use pluginx::{
-    handshake::HandshakeConfig, server::config::ServerConfig, NamedService, Request, Response,
-    Status, Streaming,
+    handshake::HandshakeConfig, plugin::PluginServer, server::config::ServerConfig, NamedService,
+    Request, Response, Status, Streaming,
 };
 use serde::Deserialize;
 use spire_plugin::spire::{
@@ -91,6 +91,36 @@ impl Init for DummyNodeAttestor {
     }
 }
 
+struct ConfigPlugin(Arc<DummyNodeAttestor>);
+
+impl PluginServer for ConfigPlugin {
+    type Server = ConfigServer<DummyNodeAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        ConfigServer::from_arc(self.0.clone())
+    }
+}
+
+struct NodeAttestorPlugin(Arc<DummyNodeAttestor>);
+
+impl PluginServer for NodeAttestorPlugin {
+    type Server = NodeAttestorServer<DummyNodeAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        NodeAttestorServer::from_arc(self.0.clone())
+    }
+}
+
+struct InitPlugin(Arc<DummyNodeAttestor>);
+
+impl PluginServer for InitPlugin {
+    type Server = InitServer<DummyNodeAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        InitServer::from_arc(self.0.clone())
+    }
+}
+
 async fn amain() {
     let mut server = pluginx::server::Server::new(ServerConfig {
         handshake_config: HandshakeConfig {
@@ -105,11 +135,11 @@ async fn amain() {
     let attestor = Arc::new(DummyNodeAttestor::default());
 
     server
-        .add_plugin(ConfigServer::from_arc(attestor.clone()))
+        .add_plugin(ConfigPlugin(attestor.clone()))
         .await
-        .add_plugin(NodeAttestorServer::from_arc(attestor.clone()))
+        .add_plugin(NodeAttestorPlugin(attestor.clone()))
         .await
-        .add_plugin(InitServer::from_arc(attestor))
+        .add_plugin(InitPlugin(attestor))
         .await;
 
     server.run().await.unwrap();

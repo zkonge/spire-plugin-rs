@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.36.0", features = ["rt"] }
+tokio = { version = "1.37.0", features = ["rt"] }
 pluginx = { git = "https://github.com/zkonge/pluginx.git" }
 spire-plugin = { path = "../../" }
 futures = { version = "0.3.30", default-features = false }
-hcl-rs = "0.16.7"
+hcl-rs = "0.16.8"
 serde = { version = "1.0.197", features = ["derive"] }
 
 [[bin]]

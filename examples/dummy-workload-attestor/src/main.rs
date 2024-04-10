@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use pluginx::{
     handshake::HandshakeConfig,
+    plugin::PluginServer,
     server::{config::ServerConfig, Server},
     NamedService, Request, Response, Status,
 };
@@ -61,6 +62,36 @@ impl Init for DummyAttestor {
     }
 }
 
+struct ConfigPlugin(Arc<DummyAttestor>);
+
+impl PluginServer for ConfigPlugin {
+    type Server = ConfigServer<DummyAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        ConfigServer::from_arc(self.0.clone())
+    }
+}
+
+struct WorkloadAttestorPlugin(Arc<DummyAttestor>);
+
+impl PluginServer for WorkloadAttestorPlugin {
+    type Server = WorkloadAttestorServer<DummyAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        WorkloadAttestorServer::from_arc(self.0.clone())
+    }
+}
+
+struct InitPlugin(Arc<DummyAttestor>);
+
+impl PluginServer for InitPlugin {
+    type Server = InitServer<DummyAttestor>;
+
+    async fn server(&self) -> Self::Server {
+        InitServer::from_arc(self.0.clone())
+    }
+}
+
 async fn amain() {
     let mut server = Server::new(ServerConfig {
         handshake_config: HandshakeConfig {
@@ -75,11 +106,11 @@ async fn amain() {
     let attestor = Arc::new(DummyAttestor);
 
     server
-        .add_plugin(ConfigServer::from_arc(attestor.clone()))
+        .add_plugin(ConfigPlugin(attestor.clone()))
         .await
-        .add_plugin(WorkloadAttestorServer::from_arc(attestor.clone()))
+        .add_plugin(WorkloadAttestorPlugin(attestor.clone()))
         .await
-        .add_plugin(InitServer::from_arc(attestor.clone()))
+        .add_plugin(InitPlugin(attestor.clone()))
         .await;
 
     server.run().await.unwrap();
