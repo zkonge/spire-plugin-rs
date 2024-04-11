@@ -7,3 +7,8 @@ edition = "2021"
 tokio = { version = "1.37.0", features = ["rt"] }
 pluginx = { git = "https://github.com/zkonge/pluginx.git" }
 spire-plugin = { path = "../../" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
