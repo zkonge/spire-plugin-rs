@@ -5,12 +5,16 @@ authors = ["Konge <zkonge@outlook.com>"]
 edition = "2021"
 
 [dependencies]
-prost = "0.12.4"
-prost-types = "0.12.4"
-tonic = "0.11.0"
+prost = "0.13.1"
+prost-types = "0.13.1"
+tonic = { version = "0.12.0", default-features = false, features = [
+    "codegen",
+    "prost",
+    "transport",
+] }
 
 [build-dependencies]
-tonic-build = "0.11.0"
+tonic-build = "0.12.0"
 
 [features]
 default = [
