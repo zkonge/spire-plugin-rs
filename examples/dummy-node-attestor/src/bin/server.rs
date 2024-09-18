@@ -83,14 +83,14 @@ impl NodeAttestor for DummyNodeAttestor {
         let spiffe_id = format!(
             "spiffe://{}/spire/agent/dummy/{}",
             self.trust_domain.lock().unwrap(),
-            user_id
+            &user_id
         );
 
         let response = AttestResponse {
             response: Some(attest_response::Response::AgentAttributes(
                 AgentAttributes {
                     spiffe_id,
-                    selector_values: Vec::new(),
+                    selector_values: vec![user_id],
                     can_reattest: true,
                 },
             )),
