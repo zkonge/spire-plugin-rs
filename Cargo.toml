@@ -11,14 +11,14 @@ edition = "2021"
 [dependencies]
 prost = "0.13.3"
 prost-types = "0.13.3"
-tonic = { version = "0.12.2", default-features = false, features = [
+tonic = { version = "0.12.3", default-features = false, features = [
     "codegen",
     "prost",
     "transport",
 ] }
 
 [build-dependencies]
-tonic-build = "0.12.2"
+tonic-build = "0.12.3"
 
 [features]
 default = [

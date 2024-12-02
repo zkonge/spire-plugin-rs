@@ -3,7 +3,7 @@ fn main() {
         .include_file("spire_plugin.rs")
         // .bytes(["."])
         .emit_rerun_if_changed(true)
-        .compile(
+        .compile_protos(
             &[
                 // common protos
                 "proto/spire/service/common/config/v1/config.proto",

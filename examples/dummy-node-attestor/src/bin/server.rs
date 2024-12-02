@@ -3,7 +3,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-use futures::{stream, StreamExt};
+use futures_util::{stream, StreamExt};
 use pluginx::{
     handshake::HandshakeConfig, server::config::ServerConfig, NamedService, Request, Response,
     Status, Streaming,
