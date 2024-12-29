@@ -2,6 +2,12 @@
 resolver = "2"
 members = ["examples/*"]
 
+[workspace.dependencies]
+tokio = { version = "1.42.0", features = ["rt"] }
+futures-util = { version = "0.3.31", default-features = false }
+pluginx = { git = "https://github.com/zkonge/pluginx.git" }
+spire-plugin = { path = "." }
+
 [package]
 name = "spire-plugin"
 version = "0.0.0"

@@ -4,12 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.41.1", features = ["rt"] }
-pluginx = { git = "https://github.com/zkonge/pluginx.git" }
-spire-plugin = { path = "../../" }
-futures-util = { version = "0.3.31", default-features = false }
+tokio.workspace = true
+futures-util.workspace = true
+pluginx.workspace = true
+spire-plugin.workspace = true
+
 hcl-rs = "0.18.2"
-serde = { version = "1.0.215", features = ["derive"] }
+serde = { version = "1.0.217", features = ["derive"] }
 
 [[bin]]
 name = "dummy-node-attestor-server"
