@@ -2,7 +2,7 @@ syntax = "proto3";
 package spire.plugin.types;
 option go_package = "github.com/spiffe/spire-plugin-sdk/proto/spire/plugin/types";
 
-message JWTKey {
+message WITKey {
     // The PKIX encoded public key.
     bytes public_key = 1;
 

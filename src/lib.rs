@@ -1,3 +1,1 @@
-mod proto;
-
-pub use proto::*;
+tonic::include_proto!("spire_plugin");

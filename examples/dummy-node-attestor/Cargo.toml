@@ -9,8 +9,8 @@ futures-util.workspace = true
 pluginx.workspace = true
 spire-plugin.workspace = true
 
-hcl-rs = "0.18.2"
-serde = { version = "1.0.217", features = ["derive"] }
+hcl-rs = "0.19.4"
+serde = { version = "1.0.228", features = ["derive"] }
 
 [[bin]]
 name = "dummy-node-attestor-server"

@@ -1,13 +1,3 @@
-[workspace]
-resolver = "2"
-members = ["examples/*"]
-
-[workspace.dependencies]
-tokio = { version = "1.42.0", features = ["rt"] }
-futures-util = { version = "0.3.31", default-features = false }
-pluginx = { git = "https://github.com/zkonge/pluginx.git" }
-spire-plugin = { path = "." }
-
 [package]
 name = "spire-plugin"
 version = "0.0.0"
@@ -15,15 +5,13 @@ authors = ["Konge <zkonge@outlook.com>"]
 edition = "2021"
 
 [dependencies]
-prost = "0.13.4"
-prost-types = "0.13.4"
-tonic = { version = "0.13.1", default-features = false, features = [
-    "codegen",
-    "prost",
-] }
+prost = "0.14.1"
+prost-types = "0.14.1"
+tonic = { version = "0.14.2", default-features = false, features = ["codegen"] }
+tonic-prost = "0.14.2"
 
 [build-dependencies]
-tonic-build = "0.13.1"
+tonic-prost-build = "0.14.2"
 
 [features]
 default = [
@@ -51,3 +39,13 @@ server-keymanager = []
 server-nodeattestor = []
 server-notifier = []
 server-upstreamauthority = []
+
+[workspace]
+resolver = "2"
+members = ["examples/*"]
+
+[workspace.dependencies]
+tokio = { version = "1.48.0", features = ["rt"] }
+futures-util = { version = "0.3.31", default-features = false }
+pluginx = { git = "https://github.com/zkonge/pluginx.git" }
+spire-plugin = { path = "." }

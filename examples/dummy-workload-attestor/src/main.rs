@@ -13,7 +13,7 @@ use spire_plugin::spire::{
     service::{
         common::config::v1::{
             config_server::{Config, ConfigServer},
-            ConfigureRequest, ConfigureResponse,
+            ConfigureRequest, ConfigureResponse, ValidateRequest, ValidateResponse,
         },
         private::init::v1::{
             init_server::{Init, InitServer},
@@ -32,6 +32,13 @@ impl Config for DummyAttestor {
         _: Request<ConfigureRequest>,
     ) -> Result<Response<ConfigureResponse>, Status> {
         Ok(Response::new(ConfigureResponse {}))
+    }
+
+    async fn validate(
+        &self,
+        _: Request<ValidateRequest>,
+    ) -> Result<Response<ValidateResponse>, Status> {
+        Err(Status::unimplemented("validate not implemented"))
     }
 }
 
