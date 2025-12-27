@@ -2,7 +2,7 @@
 name = "spire-plugin"
 version = "0.0.0"
 authors = ["Konge <zkonge@outlook.com>"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 prost = "0.14.1"
